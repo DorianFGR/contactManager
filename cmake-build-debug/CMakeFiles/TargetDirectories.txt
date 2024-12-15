@@ -1,0 +1,3 @@
+C:/Users/dofig/CLionProjects/contactManager/cmake-build-debug/CMakeFiles/contactManager.dir
+C:/Users/dofig/CLionProjects/contactManager/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/dofig/CLionProjects/contactManager/cmake-build-debug/CMakeFiles/rebuild_cache.dir
