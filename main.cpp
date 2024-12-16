@@ -39,11 +39,11 @@ void viewAllContacts(std::vector<contact>& contacts) {
 
 
     int lenght = contacts.size();
-    std::cout << lenght << std::endl;
 
     for (int i = 0; i < lenght; i++) {
 
-        std::cout<<"Contact number : " + i ;
+        std::cout<<"Contact number : ";
+        std::cout<<i +1;
 
         std::cout<<"\n_____________________\n";
         std::cout<<"NickName : ";
@@ -61,6 +61,47 @@ void viewAllContacts(std::vector<contact>& contacts) {
     }
 }
 
+void viewSpecificContacts(std::vector<contact>& contacts) {
+
+    std::string contactNumber;
+
+    std::cout<<"Contact number : ";
+    std::cin >> contactNumber;
+
+    try {
+
+        int contactIndex = std::stoi(contactNumber);
+
+
+        if (contactIndex < 0 || contactIndex >= contacts.size()) {
+            std::cout << "Invalid contact index!" << std::endl;
+            return;
+        }
+
+        contactIndex -= 1;
+        const contact& contact = contacts[contactIndex];
+
+
+        std::cout << "\n_____________________\n";
+        std::cout << "NickName: " << contact.nickname << std::endl;
+        std::cout << "Name: " << contact.name << std::endl;
+        std::cout << "Phone Number: " << contact.phoneNumber << std::endl;
+        std::cout << "Email: " << contact.email << std::endl;
+        std::cout << "Address: " << contact.address << std::endl;
+        std::cout << "_____________________\n";
+
+    } catch (const std::invalid_argument& e) {
+
+        std::cout << "Invalid contact number!" << std::endl;
+
+    } catch (const std::out_of_range& e) {
+
+        std::cout << "Contact number is out of range!" << std::endl;
+
+    }
+
+}
+
 
 int main() {
 
@@ -69,7 +110,7 @@ int main() {
 
     do{
 
-        std::cout<<"Contact Manager\n";
+        std::cout<<"\nContact Manager\n";
         std::cout<<"_____________________\n";
         std::cout<<"1. Add a new contact\n";
         std::cout<<"2. View all contacts\n";
@@ -93,6 +134,11 @@ int main() {
             case 2:
 
                 viewAllContacts(contacts);
+                break;
+
+            case 3:
+
+                viewSpecificContacts(contacts);
                 break;
 
             case 5:
