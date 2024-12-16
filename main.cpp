@@ -102,6 +102,54 @@ void viewSpecificContacts(std::vector<contact>& contacts) {
 
 }
 
+void deleteContact(std::vector<contact>& contacts) {
+
+    std::string contactNumber;
+
+    std::cout<<"Contact number : ";
+    std::cin >> contactNumber;
+
+    try {
+
+        int contactIndex = std::stoi(contactNumber);
+
+        contactIndex -= 1;
+
+        if (contactIndex < 0 || contactIndex >= contacts.size()) {
+            std::cout << "Invalid contact index!" << std::endl;
+            return;
+        }
+
+
+        const contact& contactToDelete = contacts[contactIndex];
+
+
+        std::cout << "Are you sure you want to delete contact: " << contactToDelete.name
+                  << " (Phone: " << contactToDelete.phoneNumber << ")? (y/n): ";
+        char confirmation;
+        std::cin >> confirmation;
+
+
+        if (confirmation == 'y' || confirmation == 'Y') {
+            contacts.erase(contacts.begin() + contactIndex);
+            std::cout << "Contact deleted successfully." << std::endl;
+        } else {
+            std::cout << "Contact deletion canceled." << std::endl;
+        }
+
+
+    } catch (const std::invalid_argument& e) {
+
+        std::cout << "Invalid contact number!" << std::endl;
+
+    } catch (const std::out_of_range& e) {
+
+        std::cout << "Contact number is out of range!" << std::endl;
+
+    }
+
+}
+
 
 int main() {
 
@@ -114,8 +162,8 @@ int main() {
         std::cout<<"_____________________\n";
         std::cout<<"1. Add a new contact\n";
         std::cout<<"2. View all contacts\n";
-        std::cout<<"3. View all contacts\n";
-        std::cout<<"4. View all contacts\n";
+        std::cout<<"3. View a specific contact\n";
+        std::cout<<"4. Delete a contact\n";
         std::cout<<"5. Exit\n";
 
 
@@ -140,6 +188,12 @@ int main() {
 
                 viewSpecificContacts(contacts);
                 break;
+
+            case 4:
+
+                deleteContact(contacts);
+                break;
+
 
             case 5:
 
