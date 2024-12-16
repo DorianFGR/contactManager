@@ -1,7 +1,11 @@
+#include <fstream>
 #include <iostream>
 #include <limits>
 #include <vector>
 #include <string>
+#include "include/json.hpp"
+
+using json =nlohmann::json;
 
 struct contact {
     std::string nickname;
@@ -10,6 +14,65 @@ struct contact {
     std::string email;
     std::string address;
 };
+
+void to_json(nlohmann::json &j, const contact &c) {
+
+    j = nlohmann::json{{"nickname", c.nickname}, {"name", c.name}, {"phoneNumber", c.phoneNumber}, {"email", c.email}, {"address", c.address}};
+
+}
+
+void from_json(const nlohmann::json &j, contact &c) {
+
+    j.at("nickname").get_to(c.nickname);
+    j.at("name").get_to(c.name);
+    j.at("phoneNumber").get_to(c.phoneNumber);
+    j.at("email").get_to(c.email);
+    j.at("address").get_to(c.address);
+
+}
+
+bool save_contact_to_file(const contact &c, const std::string &filename) {
+
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+
+        std::cerr << "Error : Could not open file " << filename << std::endl;
+        return false;
+    }
+
+    json j = c;
+    file << j.dump(4);
+    file.close();
+    return true;
+}
+
+bool load_contact_from_file(contact &c, const std::string &filename) {
+
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+
+        std::cerr << "Error : Could not open file " << filename << std::endl;
+        return false;
+    }
+
+    json j;
+    file >> j;
+
+    try {
+
+        c = j.get<contact>();
+
+    }catch (json::exception &e) {
+
+        std::cerr << "Error during JSON convertion " << e.what() << std::endl;
+        return false;
+
+    }
+
+    return true;
+
+}
+
 
 void addContact(std::vector<contact>& contacts) {
     contact newContact;
@@ -33,6 +96,8 @@ void addContact(std::vector<contact>& contacts) {
 
     contacts.push_back(newContact);
     std::cout << "Contact Added" << std::endl;
+
+
 }
 
 void viewAllContacts(std::vector<contact>& contacts) {
@@ -177,6 +242,11 @@ int main() {
             case 1:
 
                 addContact(contacts);
+
+                if (save_contact_to_file(contact, "contact.json")) {
+                    std::cout << "Le fichier a été sauvegardé avec succès !" << std::endl;
+                }
+
                 break;
 
             case 2:
