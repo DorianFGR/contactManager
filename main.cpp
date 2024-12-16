@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include <vector>
 #include <string>
 
@@ -10,27 +11,28 @@ struct contact {
     std::string address;
 };
 
-void addContact(std::vector<contact>& contacts){
-
+void addContact(std::vector<contact>& contacts) {
     contact newContact;
+
     std::cout << "Enter Nickname: ";
     std::cin >> newContact.nickname;
 
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     std::cout << "Enter Name: ";
-    std::cin >> newContact.name;
+    std::getline(std::cin, newContact.name);
 
     std::cout << "Enter Phone: ";
-    std::cin >> newContact.phoneNumber;
+    std::getline(std::cin, newContact.phoneNumber);
 
     std::cout << "Enter Email: ";
-    std::cin >> newContact.email;
+    std::getline(std::cin, newContact.email);
 
     std::cout << "Enter Address: ";
-    std::cin >> newContact.address;
+    std::getline(std::cin, newContact.address);
 
     contacts.push_back(newContact);
-
-
+    std::cout << "Contact Added" << std::endl;
 }
 
 void viewAllContacts(std::vector<contact>& contacts) {
@@ -44,15 +46,15 @@ void viewAllContacts(std::vector<contact>& contacts) {
         std::cout<<"Contact number : " + i ;
 
         std::cout<<"\n_____________________\n";
-        std::cout<<"NickName : \n";
+        std::cout<<"NickName : ";
         std::cout << contacts[i].nickname << std::endl;
-        std::cout<<"Name : \n";
+        std::cout<<"Name : ";
         std::cout << contacts[i].name << std::endl;
-        std::cout<<"phone Number : \n";
+        std::cout<<"phone Number : ";
         std::cout << contacts[i].phoneNumber << std::endl;
-        std::cout<<"Email : \n";
+        std::cout<<"Email : ";
         std::cout << contacts[i].email << std::endl;
-        std::cout<<"Address : \n";
+        std::cout<<"Address : ";
         std::cout << contacts[i].address << std::endl;
         std::cout<<"_____________________\n";
 
