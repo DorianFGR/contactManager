@@ -1,3 +1,5 @@
+// Created by Dorian Figueiras in December 2024 ( https://github.com/DorianFGR )
+
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -214,6 +216,12 @@ void deleteContact(std::vector<contact>& contacts) {
         std::cout << "Contact number is out of range!" << std::endl;
 
     }
+}
+
+void searchContact(const std::vector<contact>& contacts) {
+
+
+
 }
 
 int main() {
